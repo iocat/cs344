@@ -1,33 +1,29 @@
 package maxsubarr
 
-var defaultMaxFunc = Kadane
+// FindMax runs the registered/default find maximum submatrix func
+var FindMax = Kadane
 
 // Register registers an algorithm
 func Register(maxFunc MaxFunc) {
-	defaultMaxFunc = maxFunc
-}
-
-// FindMax runs the registered/default find maximum submatrix func
-func FindMax(a []int) (int, int, error) {
-	return defaultMaxFunc(a)
+	FindMax = maxFunc
 }
 
 // MaxFunc represents a function that finds the maximum subarray
 // and returns the beginning and the ending index of the array
 // NOTE: the maximum sum subarray would be a[begin:end+1]
 // Return index is based on zero based indexing scheme of golang
-type MaxFunc func([]int) (int, int, error)
+type MaxFunc func([]int) (int, int, int, error)
 
-// BruteForce represents the brute force solution
-var BruteForce MaxFunc = bruteForce
+// BruteForce is Exported Brute Force solution
+var BruteForce = bruteForce
 
-func bruteForce(a []int) (int, int, error) {
+func bruteForce(a []int) (int, int, int, error) {
 	var (
 		imax, jmax, max int
 		n               = len(a)
 	)
 	if len(a) == 0 {
-		return 0, 0, nil
+		return 0, 0, 0, nil
 	}
 	for i := 0; i < n; i++ {
 		for j := i; j < n; j++ {
@@ -40,7 +36,7 @@ func bruteForce(a []int) (int, int, error) {
 			}
 		}
 	}
-	return imax, jmax, nil
+	return imax, jmax, max, nil
 }
 
 func max(x int, y int) int {
@@ -61,7 +57,7 @@ var Kadane MaxFunc = kadane
 // Otherwise, curmax remains the same
 // If tempmax results in a less than 0 set of contiguous elements, tempmax will
 // start a new set
-func kadane(a []int) (int, int, error) {
+func kadane(a []int) (int, int, int, error) {
 	var (
 		imax, jmax, tempmax int
 		isofar              int
@@ -80,5 +76,5 @@ func kadane(a []int) (int, int, error) {
 		}
 	}
 
-	return imax, jmax, nil
+	return imax, jmax, curmax, nil
 }
