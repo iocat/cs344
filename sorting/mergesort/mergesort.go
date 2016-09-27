@@ -17,7 +17,7 @@ func EmbarrassinglyParallel(si []int) {
 }
 
 const (
-	// SerializedMergingThreshold is the maximum number of elements to
+	// SerializedMergingThreshold holds the maximum number of elements to
 	// sort the array serially
 	SerializedMergingThreshold = 5
 )
@@ -38,8 +38,8 @@ func paraMsort(list []int, a, b int, temp []int, done chan<- struct{}) {
 	done <- struct{}{}
 }
 
-// msort conducts merge sort
-// inarr represents the temporary array which is shared among the smaller
+// msort conducts merge sort sequentially
+// temp represents the temporary array which is shared among the smaller
 // subproblems
 // a, b are the range of the sorting subproblem
 func msort(list []int, a, b int, temp []int) {
@@ -47,8 +47,8 @@ func msort(list []int, a, b int, temp []int) {
 	if a < b { /* base case */
 		msort(list, a, mid, temp)
 		msort(list, mid+1, b, temp)
+		merge(list, a, b, temp)
 	}
-	merge(list, a, b, temp)
 }
 
 // merge merges the two sorted segments
