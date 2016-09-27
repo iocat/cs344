@@ -7,14 +7,42 @@ func Sort(si []int) {
 	msort(si, 0, len(si)-1, inarr)
 }
 
+// EmbarrassinglyParallel implements parallel mergesort
+// NOTE: This algorithm spawns as many as n/2 goroutines to sort the array
+func EmbarrassinglyParallel(si []int) {
+	temp := make([]int, len(si))
+	done := make(chan struct{})
+	go paraMsort(si, 0, len(si)-1, temp, done)
+	<-done
+}
+
+const (
+	// SerializedMergingThreshold is the maximum number of elements to
+	// sort the array serially
+	SerializedMergingThreshold = 5
+)
+
+// paraMsort sorts the array in a parallel fashion
+func paraMsort(list []int, a, b int, temp []int, done chan<- struct{}) {
+	mid := (a + b) / 2
+	if b-a < SerializedMergingThreshold {
+		msort(list, a, b, temp) /* normal mergesort */
+	} else if a < b {
+		subDone := make(chan struct{}) /* A waiter for sub goroutines */
+		go paraMsort(list, a, mid, temp, subDone)
+		go paraMsort(list, mid+1, b, temp, subDone)
+		<-subDone
+		<-subDone
+		merge(list, a, b, temp)
+	}
+	done <- struct{}{}
+}
+
 // msort conducts merge sort
 // inarr represents the temporary array which is shared among the smaller
 // subproblems
 // a, b are the range of the sorting subproblem
 func msort(list []int, a, b int, temp []int) {
-	if a > b {
-		panic("a is supposed to be bigger than b")
-	}
 	mid := (b + a) / 2
 	if a < b { /* base case */
 		msort(list, a, mid, temp)
