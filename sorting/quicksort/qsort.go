@@ -28,13 +28,13 @@ func partition(a []int) int {
 	)
 	a[0], a[pi], pi = a[pi], a[0], 0 /* Swap the pivot to the front */
 	for i := 1; i < len(a); i++ {
-		// Swap smaller elements to the front
+		// Swap smaller elements before the pivot
 		if a[i] <= a[0] {
 			pi++
 			a[pi], a[i] = a[i], a[pi]
 		}
 	}
-	a[0], a[pi] = a[pi], a[0]
+	a[0], a[pi] = a[pi], a[0] /* Swap the pivot to the middle */
 	return pi
 }
 
