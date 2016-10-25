@@ -30,7 +30,7 @@ func (g *Graph) boundCheck(v int) error {
 }
 
 // Graph represents a weighted graph using adjacent list.
-// This graph is weighted and does not care about directions of edge.
+// This graph is weighted and does not care about directions of edges.
 // The indeces of every vertice are assumed to be in increasing order. The
 // number of vertices is scaled automatically with insertions, but limited to
 // MaxVertices.
@@ -43,7 +43,7 @@ type Graph struct {
 
 // EdgeNode represents the edge
 type EdgeNode struct {
-	Y      int /* the tail of the edge */
+	Y      int /* the head of the edge */
 	Weight int /* the weight of the edge */
 }
 
