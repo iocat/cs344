@@ -97,7 +97,7 @@ func (g *Graph) checkAndExtend(v int) {
 		if newnv > graph.MaxVertices {
 			panic(fmt.Errorf("need more vertices than allowed, got %d, expected [0,%d]", newnv, graph.MaxVertices))
 		}
-		more := make([][]EdgeNode, newnv-nv) /* add more vertex list */
+		more := make([][]EdgeNode, newnv-nv) /* add more vertex lists */
 		g.Nodes = append(g.Nodes, more...)   /* to the adj list*/
 	} else if err == errLowBound {
 		panic(fmt.Errorf("vertex %d is out of range, expected range: %d to %d", v, 0, nv-1))
@@ -126,5 +126,16 @@ func (g *Graph) InsertEdge(x, y, weight int, directed bool) {
 
 // DeleteEdge implements the graph.Interface
 func (g *Graph) DeleteEdge(x, y int, directed bool) {
-	// TODO
+	graph.MustBoundCheck(g, x)
+	graph.MustBoundCheck(g, y)
+	var edges = g.Nodes[x]
+	for i, edge := range edges {
+		if edge.Y == y {
+			graph.Nodes[x] = append(edges[0:i], edges[i+1:]...)
+			return
+		}
+	}
+	if !directed {
+		g.DeleteEdge(y, x, true)
+	}
 }
