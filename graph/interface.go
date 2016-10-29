@@ -5,7 +5,7 @@ const (
 	MaxVertices = 1000
 )
 
-// Interface represents a graph interface
+// Interface represents a directed graph
 type Interface interface {
 	// returns the total number of vertices in the graph
 	Nvertices() int
@@ -27,7 +27,7 @@ type Interface interface {
 	DeleteEdge(x, y int, directed bool)
 }
 
-type createGraphFunc func(nvertices) (Interface, error)
+type createGraphFunc func(int) (Interface, error)
 
 var pickedGraphCreator createGraphFunc
 

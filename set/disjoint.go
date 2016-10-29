@@ -44,20 +44,19 @@ func (d *DisjointSets) Union(a int, b int) int {
 		panic(fmt.Errorf("cannot operate union on the same element %s", a))
 	}
 	var (
-		id1      = d.Find(a)
-		id2      = d.Find(b)
+		seta = d.Find(a) // find the set a belongs to
+		setb = d.Find(b) // find the set b belongs to
+
 		parentid int
 		child    *SetWithSize
 		parent   *SetWithSize
 	)
-	if (*d)[id1].nelems < (*d)[id2].nelems { // decide which is the child set, which is the parent set
-		child, parent, parentid = &((*d)[id1]), &((*d)[id2]), id2
+	if (*d)[seta].nelems < (*d)[setb].nelems { // decide which is the child set, which is the parent set
+		child, parent, parentid = &((*d)[seta]), &((*d)[setb]), setb
 	} else {
-		child, parent, parentid = &((*d)[id2]), &((*d)[id1]), id1
+		child, parent, parentid = &((*d)[setb]), &((*d)[seta]), seta
 	}
 	parent.nelems += child.nelems
 	child.parent = parentid
-
-	fmt.Println(child, parent, parentid)
 	return parentid
 }

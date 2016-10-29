@@ -7,7 +7,13 @@ import (
 )
 
 func init() {
-	graph.Loads(New) /* load the package with side effect */
+	graph.Loads(func(nvertices int) (graph.Interface, error) {
+		g, err := New(nvertices)
+		if err != nil {
+			return nil, err
+		}
+		return g, nil
+	}) /* load the package with side effect */
 }
 
 // Graph represents a weighted graph implemented with an adjacent matrix.
@@ -24,7 +30,7 @@ type Edge struct {
 
 // New creates a new graph with nvertices vertices
 // It runs in O(|V|^2)
-func New(nvertices int) (graph.Interface, error) {
+func New(nvertices int) (*Graph, error) {
 	if nvertices < 0 || nvertices > graph.MaxVertices {
 		return nil, fmt.Errorf("vertex capacity exceeded: expected [0, %d], got %d", graph.MaxVertices, nvertices)
 	}
@@ -74,26 +80,30 @@ func (g *Graph) OutDegree(v int) int {
 
 // Weight returns the weight of the graph
 // It runs in O(|1|)
-func (g *Graph) Weight(x, y int) int {
+func (g *Graph) Weight(x, y int) (int, bool) {
 	graph.MustBoundCheck(g, x)
 	graph.MustBoundCheck(g, y)
-	return (*g)[x][y]
+	weight := (*g)[x][y].Weight
+	if weight == 0 {
+		return 0, false
+	}
+	return weight, true
 }
 
-func(g *Graph) checkAndExtend(v int) error{
-	var(
+func (g *Graph) checkAndExtend(v int) error {
+	var (
 		oldnv = g.Nvertices()
 		newnv = v + 1
-		err := graph.BoundCheck(g,v)
+		err   = graph.BoundCheck(g, v)
 	)
-	switch(err)
+	switch err {
 	case graph.ErrUpBound:
-		(*g) = append(*g, make([][]Edge, newnv - oldnv)...)
-		for i := (*g)[0:oldnv] {	/* add more edges to the right */
-			(*g)[i] = append((*g)[i], make([]Edge, newnv - oldnv)...)
+		(*g) = append(*g, make([][]Edge, newnv-oldnv)...)
+		for i := range (*g)[0:oldnv] { /* add more edges to the right */
+			(*g)[i] = append((*g)[i], make([]Edge, newnv-oldnv)...)
 		}
-		for i := (*g)[oldnv: newnv]{/* create empty space for a new set of edge */
-			(*g)[i] = make([]Graph, newnv)
+		for i := range (*g)[oldnv:newnv] { /* create empty space for a new set of edge */
+			(*g)[i] = make([]Edge, newnv)
 		}
 		return nil
 	case graph.ErrLowBound:
@@ -103,27 +113,27 @@ func(g *Graph) checkAndExtend(v int) error{
 	}
 }
 
-// InsertEdge implements graph.Interface 
-// 
+// InsertEdge implements graph.Interface
+//
 // This runs in O(1) if the no new vertex is added
 // This runs in O(|E|^2) if the graph is expanded
-func (g *Graph) InsertEdge(x, y, weight int, directed? bool) {
+func (g *Graph) InsertEdge(x, y, weight int, directed bool) {
 	g.checkAndExtend(x)
 	g.checkAndExtend(y)
-	(*g)[x][y] = weight
+	(*g)[x][y].Weight = weight
 	if !directed {
-		(*g)[y][x] = weight
+		(*g)[y][x].Weight = weight
 	}
 }
 
 // DeleteEdge implements graph.Interface
 //
 // This runs in O(1)
-func (g *Graph) DeleteEdge(x, y, weight int, directed bool) {
+func (g *Graph) DeleteEdge(x, y int, directed bool) {
 	graph.MustBoundCheck(g, x)
 	graph.MustBoundCheck(g, y)
-	(*g)[x][y] = 0
+	(*g)[x][y].Weight = 0
 	if !directed {
-		(*g)[y][x] = 0
+		(*g)[y][x].Weight = 0
 	}
 }
