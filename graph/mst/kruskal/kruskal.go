@@ -26,9 +26,9 @@ func (es edges) Swap(a int, b int) {
 // the adjacentlist.Graph is directed
 func Find(g *graph.Graph) *graph.Graph {
 	var (
-		mst   *graph.Graph
-		set   = set.New(g.Nvertices())
-		edges = edges(g.Edges())
+		mst   *graph.Graph             /* the minimal spanning tree */
+		set   = set.New(g.Nvertices()) /* union-find disjoint sets */
+		edges = edges(g.Edges())       /* the edges of the original tree */
 	)
 	mst, err := graph.New(g.Nvertices())
 	if err != nil {
