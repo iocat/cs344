@@ -19,7 +19,7 @@ func init() {
 }
 
 // Graph represents a weighted graph implemented using adjacent list.
-// This graph is weighted and does not care about directions of edges.
+// This graph is weighted and does not care about the directions of edges.
 // The indeces of every vertice are assumed to be in increasing order. The
 // number of vertices is scaled automatically with insertions, but limited to
 // graph.MaxVertices.

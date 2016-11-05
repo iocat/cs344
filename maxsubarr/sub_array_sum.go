@@ -17,6 +17,7 @@ type MaxFunc func([]int) (int, int, int, error)
 // BruteForce is Exported Brute Force solution
 var BruteForce = bruteForce
 
+// This runs in O(n^3)
 func bruteForce(a []int) (int, int, int, error) {
 	var (
 		imax, jmax, max int
@@ -49,7 +50,7 @@ func max(x int, y int) int {
 // Kadane represents the Kadane algorithm (added returned index)
 var Kadane MaxFunc = kadane
 
-// kadane implements kadane algorithm: imagine 2 sub arrays called tempmax and
+// kadane implements Kadane's algorithm: imagine 2 sub arrays called tempmax and
 // curmax
 // tempmax dynamically captures a new set of contiguous elements.
 // If tempmax results in a bigger subarray sum (comparing to curmax), then curmax
@@ -57,6 +58,7 @@ var Kadane MaxFunc = kadane
 // Otherwise, curmax remains the same
 // If tempmax results in a less than 0 set of contiguous elements, tempmax will
 // start a new set
+// This runs in O(n)
 func kadane(a []int) (int, int, int, error) {
 	var (
 		imax, jmax, tempmax int

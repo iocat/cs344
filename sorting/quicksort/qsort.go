@@ -6,6 +6,10 @@ import (
 )
 
 // Sort sorts the array using quicksort
+// qsort sorts in-place, but not stable.
+// Qsort has a non-deterministic running time.
+// 		The expected running time is O(n*logn)
+// 		The worst case running time is O(n^2), but it rarely occurs.
 func Sort(a []int) {
 	qsort(a)
 }
