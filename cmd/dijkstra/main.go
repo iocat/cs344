@@ -24,5 +24,7 @@ func main() {
 	g.InsertEdge(2, 3, 5, false)
 	g.InsertEdge(3, 4, 3, false)
 	fmt.Println("Original graph(non-directed): ", g)
-	fmt.Println("Shortest Path tree: ", spath.Find(g, 1))
+	src := 4
+	dest := 1
+	fmt.Printf("Shortest Path (%d->%d): %s\n", src, dest, spath.Find(g, src).Path(dest))
 }

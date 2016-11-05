@@ -14,7 +14,7 @@ const infinite = math.MaxInt32
 // cost priority heap
 type Vertex struct {
 	ID     int /* The id of this node */
-	From   int /* The ID of the parent vertex, -1 for the source */
+	Parent int /* The ID of the parent vertex, -1 for the source */
 	TotalC int /* The total cost from source node */
 }
 
@@ -67,7 +67,7 @@ func initDijkstra(q *toVisitQ, sqt []*Vertex, n int, root int) {
 	for i := 0; i < n; i++ {
 		newV := Vertex{
 			ID:     i,
-			From:   -1,
+			Parent: -1,
 			TotalC: infinite,
 		}
 		if i == root {
@@ -90,13 +90,27 @@ func (t SPTree) String() string {
 		} else {
 			sep = ","
 		}
-		if t[i].From == -1 {
-			res = fmt.Sprintf("%s, (root %d)", res, t[i].ID)
+		if t[i].Parent == -1 {
+			res = fmt.Sprintf("%s%s (root %d)", res, sep, t[i].ID)
 		} else {
-			res = fmt.Sprintf("%s%s (%d->%d, %d)", res, sep, t[i].From, t[i].ID, t[i].TotalC)
+			res = fmt.Sprintf("%s%s (%d->%d, Σw: %d)", res, sep, t[i].Parent, t[i].ID, t[i].TotalC)
 		}
 	}
 	return res
+}
+
+// Path returns the shortest path from the source vertex to a chosen vertex
+func (t SPTree) Path(toVertex int) SPTree {
+	temp := t[toVertex]
+	sp := make(SPTree, 0, len(t))
+	for temp.Parent != -1 { // while not reached the root
+		sp = append(sp, temp)
+		temp = t[temp.Parent]
+	}
+	for i := 0; i < len(sp)/2; i++ {
+		sp[i], sp[len(sp)-1-i] = sp[len(sp)-1-i], sp[i]
+	}
+	return sp
 }
 
 // Find builds the shortest path tree using Dijkstra algorithm
@@ -125,9 +139,9 @@ func Find(g *graph.Graph, source int) SPTree {
 				continue /* skip the visited vertex */
 			}
 			if newC := edge.Weight + visit.TotalC; newC < spt[yid].TotalC { /* we found a better weight */
-				spt[yid].TotalC = newC   /* reset the shortest cost to this vertex*/
-				spt[yid].From = visit.ID /* set the parent of this vertex */
-				heap.Fix(q, yInvID)      /* try to move this to the smallest position */
+				spt[yid].TotalC = newC     /* reset the shortest cost to this vertex*/
+				spt[yid].Parent = visit.ID /* set the parent of this vertex */
+				heap.Fix(q, yInvID)        /* try to move this to the smallest position */
 			}
 		}
 	}
