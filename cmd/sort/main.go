@@ -5,7 +5,10 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/iocat/cs344/sorting/quicksort"
+	// sorting "github.com/iocat/cs344/sorting/quicksort"
+	// sorting "github.com/iocat/cs344/sorting/bubblesort"
+	sorting "github.com/iocat/cs344/sorting/selectionsort"
+	// sorting "github.com/iocat/cs344/sorting/mergesort"
 )
 
 func randomize(count int) []int {
@@ -30,6 +33,6 @@ func main() {
 	a := randomize(Nelems)
 
 	fmt.Printf("Randomized Array: a = %v\n", a)
-	quicksort.Sort(a)
+	sorting.Sort(a)
 	fmt.Printf("The Sorted Array = %v\n", a)
 }
