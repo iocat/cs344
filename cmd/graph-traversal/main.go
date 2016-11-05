@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	graph "github.com/iocat/cs344/graph/adjacentlist"
-	traversal "github.com/iocat/cs344/graph/bfs"
-	// traversal "github.com/iocat/cs344/graph/dfs"
+	traversal "github.com/iocat/cs344/graph/traversal/bfs"
+	// traversal "github.com/iocat/cs344/graph/traversal/dfs"
 )
 
 func main() {
