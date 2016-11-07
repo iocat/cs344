@@ -8,8 +8,9 @@ func rangeCheck(l, u, val int) bool {
 	return true
 }
 
-// SortWithRange sorts the array using binsort algorithm with the given range
-// This is not a comparision based sort. It uses set data structure to store
+// SortWithRange sorts the array using binsort algorithm with the given range.
+//
+// This is not a comparision-based sort. It uses set data structure to store
 // all the possible keys (in-range keys). Performance is gained only if the
 // range of keys is known.
 //

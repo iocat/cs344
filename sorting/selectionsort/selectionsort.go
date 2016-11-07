@@ -2,7 +2,7 @@ package selectionsort
 
 // Sort sorts the array using selection sort algorithm
 //
-// The runtime is θ(n^2)
+// The runtime is θ(n^2).
 func Sort(a []int) {
 	var (
 		ref = a /* ref references the lower end of the original array */

@@ -1,14 +1,14 @@
 package mergesort
 
-// Sort sorts the array
-// Mergesort sorts not-inplace, and is stable. It has a deterministic runtime.
-// The average and worst case runtime is O(nlogn)
+// Sort sorts the array using mergesort algorithm.
+// Mergesort is not in-place, but is stable. It has a deterministic runtime.
+// The average, best and worst case runtime is O(nlogn)
 func Sort(si []int) {
 	inarr := make([]int, len(si))
 	msort(si, 0, len(si)-1, inarr)
 }
 
-// EmbarrassinglyParallel implements parallel mergesort
+// EmbarrassinglyParallel implements parallel mergesort.
 // NOTE: This algorithm spawns as many as n/2 goroutines to sort the array
 // NOTE: it turns out to be not efficicent.
 // Claim: the runtime is busy switching
@@ -42,7 +42,7 @@ func paraMsort(list []int, a, b int, temp []int, done chan<- struct{}) {
 	done <- struct{}{}
 }
 
-// msort conducts merge sort sequentially
+// msort conducts merge sort sequentially.
 // temp represents the temporary array which is shared among the smaller
 // subproblems
 // a, b are the range of the sorting subproblem

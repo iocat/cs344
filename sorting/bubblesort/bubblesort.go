@@ -3,10 +3,10 @@ package bubblesort
 // Sort sorts the array using (improved) bubble sort algorithm.
 //
 // Bubblesort is in-place and stable.
-// Best case running time is O(n), for already sorted array.
-// Worst case running time and average case running time is O(n^2).
+// The best case running time is O(n), for already sorted arrays.
+// The worst case running time and the average case running time is O(n^2).
 //      + Worst case occurs when the array is sorted in decreasing order.
-//      + Average case analysis based on the lower bound of the number
+//      + Average case analysis is based on the lower bound of the number
 //      of inversions the array can have for every input. The runtime
 //      corresponds to how many inversions the algorithm reverses.
 func Sort(a []int) {

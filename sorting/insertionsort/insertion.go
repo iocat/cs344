@@ -3,7 +3,7 @@ package insertionsort
 // Sort sorts the array using the insertion sort algorithm
 //
 // The best case running time is O(n) for already sorted array
-// The worst case running time is O(n^2) for array sorted in the opposite order
+// The worst case running time is O(n^2) for arrays sorted in the opposite order
 // The average case running time is O(n^2) which corresponds to the average
 // number of inversions to reorder.
 func Sort(a []int) {
