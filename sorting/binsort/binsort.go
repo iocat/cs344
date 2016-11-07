@@ -16,7 +16,7 @@ func rangeCheck(l, u, val int) bool {
 // Binsort's runtime is θ(n+d) where d = u - l, the range of array's values
 func SortWithRange(a []int, l, u int) {
 	buckets := make([][]int, u-l+1) /* make buckets */
-	/* Store all elements in bucket */
+	/* Store all elements in buckets */
 	for i, bid := range a {
 		if ok := rangeCheck(l, u, a[i]); !ok {
 			panic(fmt.Errorf("value out of range: a[%d]=%d which is not in [%d,%d]", i, bid, l, u))
@@ -24,7 +24,7 @@ func SortWithRange(a []int, l, u int) {
 		bucket := &buckets[bid]
 		*bucket = append(*bucket, bid)
 	}
-	// Traverse the bucket and recover the original array in sorted order
+	// Traverse the buckets and recover the original array in sorted order
 	a = a[0:0]
 	for _, bucket := range buckets {
 		for i := range bucket {
