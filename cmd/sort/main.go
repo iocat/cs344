@@ -7,8 +7,9 @@ import (
 
 	// sorting "github.com/iocat/cs344/sorting/quicksort"
 	// sorting "github.com/iocat/cs344/sorting/bubblesort"
-	sorting "github.com/iocat/cs344/sorting/selectionsort"
-	// sorting "github.com/iocat/cs344/sorting/mergesort"
+	//sorting "github.com/iocat/cs344/sorting/selectionsort"
+	sorting "github.com/iocat/cs344/sorting/insertionsort"
+	//sorting "github.com/iocat/cs344/sorting/mergesort"
 )
 
 func randomize(count int) []int {
