@@ -23,7 +23,7 @@ type VisitFn func(source, toVisit, weight int) bool
 // Traverse performs depth-first search on the graph using source as the starting
 // vertex
 // This runs in O(|V|+|E|)
-// NOTE: that the graph only traverse to all the reachable vertex from source,
+// NOTE: that Traverse only goes to all reachable vertices from source,
 // Traverse assumes g is directed
 // Traversal halts if visitFn returns false
 func Traverse(g *graph.Graph, source int, visitFn VisitFn) {

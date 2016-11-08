@@ -77,7 +77,8 @@ func (q *visitedQueue) getIndex(node int) (int, bool) {
 }
 
 // Find finds the minimal spanning tree using Prim's algorithm
-// Idea: grow the MST and apply blue rule to each vertices
+// Idea: grow the MST and apply the blue rule to the set of vertices already
+// in the tree
 //
 // This runs in O((|V|+|E|)*log|V|). Check Dijkstra for runtime analysis
 func Find(g *graph.Graph) *graph.Graph {

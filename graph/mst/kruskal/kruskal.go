@@ -22,6 +22,12 @@ func (es edges) Swap(a int, b int) {
 }
 
 // Find finds the minimum spanning tree
+//
+// NOTE to SELF: Kruskal works thanks to the idea that a tree is a connected
+// acyclic graph with exact n-1 edges. Adding one edge to a tree will form a
+// cycle. To avoid cycles, newly added edge must connect to a brand new vertex
+// out of the tree!
+//
 // NOTE: Find assumes the graph is non-directed even if the representation of
 // the adjacentlist.Graph is directed
 func Find(g *graph.Graph) *graph.Graph {

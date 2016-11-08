@@ -23,8 +23,6 @@ type VisitFn func(source, toVisit, weight int) bool
 // Traverse performs bredth-first search on the graph using source as the starting
 // vertex
 // This runs in O(|V|+|E|)
-// NOTE: that the graph only traverse to all the reachable vertex from source,
-// Traverse assumes g is directed
 func Traverse(g *graph.Graph, source int, visitFn VisitFn) {
 	var (
 		q       = make([]Vertex, 0, g.Nvertices()) // the visiting node queue

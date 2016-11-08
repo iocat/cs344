@@ -113,8 +113,8 @@ func (t SPTree) Path(toVertex int) SPTree {
 	return sp
 }
 
-// Find builds the shortest path tree using Dijkstra algorithm
-// Greedy algorithm that gradually builds the shortest path tree
+// Find builds the shortest path tree using Dijkstra algorithm.
+// A greedy algorithm that gradually builds the shortest path tree
 //
 // The runtime is O((|V|+|E|)*log|E|) where |V|log|E| accounts for heap.Fix
 // whenever we check an out-going edge. And |E|log|E| accounts for heap.Pop
