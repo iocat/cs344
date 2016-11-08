@@ -1,9 +1,10 @@
-# Design And Analysis of algorithms
-CS344: Rutgers' Fall 2016
+# Design And Analysis of Algorithms
+CS344: Rutgers' Fall 2016.
+
 Professor: Farach-Colton.
 
 This project transforms the theoretical aspects of Algorithms into Go code. 
-Code is not thothrough tested. 
+Code is not thothroughly tested. 
 
 1. Sorting algorithms
     1. Binsort (Bucket sort)
